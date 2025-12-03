@@ -71,7 +71,3 @@ This project uses a Machine Learning model trained on real-world banking custome
 - Joblib  
 
 ---
-
-## ▶️ How to Run Locally
-
-1. Clone the repository:
