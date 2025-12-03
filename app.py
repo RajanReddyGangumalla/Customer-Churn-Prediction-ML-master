@@ -169,7 +169,7 @@ if predict_button:
         st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("---")
-st.subheader("📊 Prediction History")
+st.subheader("📊 Prediction History 123")
 
 if len(st.session_state.history) == 0:
     st.info("No predictions made yet. Fill the details in the sidebar and click **Predict Churn** to see results here.")
