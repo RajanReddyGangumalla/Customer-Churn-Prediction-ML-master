@@ -44,25 +44,25 @@ def train_model_from_csv():
     return pipeline
 
 @st.cache_resource
-def load_model():
-    try:
-        if os.path.exists("churn_model.pkl"):
-            return joblib.load("churn_model.pkl")
-        else:
-            st.warning("Model file not found. Training a new model from Churn_Modelling.csv.")
-            model = train_model_from_csv()
-            joblib.dump(model, "churn_model.pkl")
-            return model
-    except Exception:
-        st.warning("Error loading churn_model.pkl. Training a new model from Churn_Modelling.csv.")
+def load_or_train_model():
+    if os.path.exists("churn_model.pkl"):
         try:
-            model = train_model_from_csv()
-            return model
+            model = joblib.load("churn_model.pkl")
+            return model, False
         except Exception:
-            st.error("Unable to train model. Make sure Churn_Modelling.csv is in the app folder and correctly formatted.")
-            st.stop()
+            pass
 
-model = load_model()
+    model = train_model_from_csv()
+    joblib.dump(model, "churn_model.pkl")
+    return model, True
+
+
+model, retrained = load_or_train_model()
+
+if retrained:
+    st.info("ℹ️ Model was trained automatically for this session.")
+
+
 
 if "history" not in st.session_state:
     st.session_state.history = []
